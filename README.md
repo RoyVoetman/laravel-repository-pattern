@@ -34,7 +34,73 @@ If you are on Laravel 5.5 or higher, composer will have registered the provider 
 
 ### Repository pattern 
 
+Default
+```php
+namespace App\Repositories;
+
+use App\Models\Book;
+use RoyVoetman\Extras\Repository\Repository;
+
+/**
+ * Class BooksRepository
+ *
+ * @package App\Repositories
+ */
+class BooksRepository extends Repository
+{
+    /**
+     * BooksRepository constructor.
+     *
+     * @param Debtor $model
+     */
+    public function __construct(Book $model)
+    {
+        parent::__construct($model);
+    }
+}
+```
+
 ### Auto discover Form Requests attributes
+
+`StoreBook.php`
+```php
+use RoyVoetman\Extras\Http\Request;
+
+class StoreBook extends Request
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'name'             => 'required|string|max:255|min:1',
+            'reference_number' => 'nullable|string|max:255|min:1'
+        ];
+    }
+    
+    /**
+     * @return string
+     */
+    public function getLanguageKey(): string
+    {
+        return 'books.labels';
+    }
+}
+```
+
+`resources/lang/en/books.php`
+```php
+return [
+    ...
+
+    'labels' => [
+        'name'             => 'Name',
+        'reference_number' => 'Reference number'
+    ]
+```
 
 ### Preparing Request Data before it is passed to the Validator
 
