@@ -19,18 +19,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "RoyVoetman\\Repositories\\": "src"
+            "RoyVoetman\\Extras\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RoyVoetman\\Repositories\\Test\\": "tests"
+            "RoyVoetman\\Extras\\Test\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "RoyVoetman\\Repositories\\RepositoryServiceProvider"
+                "RoyVoetman\\Extras\\ExtrasServiceProvider"
             ]
         }
     }

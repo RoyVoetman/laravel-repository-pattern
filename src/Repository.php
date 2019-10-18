@@ -1,6 +1,6 @@
 <?php
 
-namespace RoyVoetman\Repositories;
+namespace RoyVoetman\Extras;
 
 use \Exception;
 use Illuminate\Database\Eloquent\Model;

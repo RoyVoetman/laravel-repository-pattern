@@ -1,6 +1,6 @@
 <?php
 
-namespace RoyVoetman\Repositories;
+namespace RoyVoetman\Extras;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider;
  *
  * @package RoyVoetman\Repositories
  */
-class RepositoryServiceProvider extends ServiceProvider
+class ExtrasServiceProvider extends ServiceProvider
 {
     
     /**
