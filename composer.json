@@ -1,6 +1,6 @@
 {
-    "name": "royvoetman/laravel-repository-pattern",
-    "description": "Package for adding the repository pattern to laravel",
+    "name": "royvoetman/laravel-extras",
+    "description": "This Laravel package provide developers with useful class preset, artisan commands, and helpers that are not included in Laravel by default.",
     "type": "library",
     "license": "MIT",
     "require": {
