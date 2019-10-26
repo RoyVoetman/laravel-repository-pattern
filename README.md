@@ -52,7 +52,7 @@ class BooksRepository extends Repository
     /**
      * BooksRepository constructor.
      *
-     * @param Debtor $model
+     * @param Book $model
      */
     public function __construct(Book $model)
     {
