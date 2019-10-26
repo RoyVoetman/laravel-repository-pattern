@@ -42,9 +42,9 @@ If you are on Laravel 5.5 or higher, composer will have registered the provider 
 
 Create a class that extends the Repository class. You should typehint the corresponding Model class within the classes constructor and pass it to the parent constructor. The parent constructor accepts all classes extended from laravel’s `Illuminate\Database\Eloquent\Model` class.
 
-```php
-// BooksRepository.php
+> All database DML (`create`, `update`, `delete`) commands will be handled within transactions. So that multiple queries with relational dependence on each other do not result in inconsistent data. 
 
+```php
 namespace App\Repositories;
 
 use App\Models\Book;
@@ -106,8 +106,6 @@ public function store()
 
 
 ### Available repository methods
-
-> All database DML (`create`, `update`, `delete`) commands will be handled within transactions. So that multiple queries with relational dependence on each other do not result in inconsistent data. 
 
 `save(array $data, Model $model = null): ?Model`
 
