@@ -13,7 +13,6 @@ This Laravel package provide developers with useful class preset, artisan comman
 | ----------------------------------------------------------- | ---------------------- |
 | Repository pattern                                          | Shipped                |
 | Enhanced Form Requests                                      | Shipped                |
-| Preparing Request Data before it is passed to the Validator | Shipped                |
 | View and Route prefixes in controllers                      | Still to be documented |
 | Artisan commands to create repositories                     | To do                  |
 
