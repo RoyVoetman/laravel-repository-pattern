@@ -297,7 +297,6 @@ class UsersRepository extends Repository
 
 ### Auto discover Form Requests attributes
 
-`StoreBook.php`
 ```php
 use RoyVoetman\Extras\Http\Request;
 
