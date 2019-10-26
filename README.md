@@ -12,7 +12,7 @@ This Laravel package provide developers with useful class preset, artisan comman
 | Feature                                                     | Status                 |
 | ----------------------------------------------------------- | ---------------------- |
 | Repository pattern                                          | Shipped                |
-| Auto discover Form Requests attributes                      | Shipped                |
+| Enhanced Form Requests                                      | Shipped                |
 | Preparing Request Data before it is passed to the Validator | Shipped                |
 | View and Route prefixes in controllers                      | Still to be documented |
 | Artisan commands to create repositories                     | To do                  |
@@ -293,8 +293,9 @@ class UsersRepository extends Repository
  ```
 
 
+## Enhanced Form Requests
 
-## Auto discover Form Requests attributes
+### Auto discover Form Requests attributes
 
 `StoreBook.php`
 ```php
@@ -337,8 +338,7 @@ return [
 ```
 
 
-
-## Preparing Request Data before it is passed to the Validator
+### Preparing Request Data before it is passed to the Validator
 
 If for example the submitted data is sanitized or encoded you can decoded it before it is passed to the validation rules.
 
