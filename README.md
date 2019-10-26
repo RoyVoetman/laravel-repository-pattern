@@ -230,9 +230,9 @@ class OrdersRepository extends Repository
         if (Arr::has($data, 'lines')) {
             $order->lines()->delete();
           
-        		foreach ($data['lines'] as $line) {
-            		$order->lines()->create($line);
-        		}
+            foreach ($data['lines'] as $line) {
+            	$order->lines()->create($line);
+            }
         }
 
         return $order;
@@ -373,7 +373,7 @@ class StoreBook extends Request
         $this->request->replace($data);
     }
   
-  	private decode()
+    private decode()
     {
       	// Your decode logic
     }
