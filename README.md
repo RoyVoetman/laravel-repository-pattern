@@ -115,7 +115,7 @@ The provided `data` will be used to create a new database record. If a model is 
 
 If the method executed successfully the new or updated model will be returned. In the case of an unhandled Exception during the creation or update of a Model all actions will be rolled back and `null` will be returned.
 
-`public function delete(Model $model): bool`
+`delete(Model $model): bool`
 
 An attempt will be made to delete the provided `model` from the database. If the model was deleted successfully `true` will be returned. In the case of an unhandled Exception all actions will be rolled back and `false` will be returned.
 
