@@ -286,7 +286,7 @@ class UsersRepository extends Repository
       	// Manipulating password in data array
       	$data['password'] = bcrypt($data['password'];
                                    
-       	// Adding language id to user
+       	// Adding language to data array
          $data['language'] = App::getLocale();
 				
         return parent::save($data, $model);
