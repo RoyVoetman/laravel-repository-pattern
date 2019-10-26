@@ -357,7 +357,7 @@ class StoreBook extends Request
     public function rules(): array
     {
         return [
-            // Your validation rules
+            'my_data' => 'required|array'
         ];
     }
     
