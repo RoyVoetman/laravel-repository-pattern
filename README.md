@@ -35,7 +35,7 @@ If you are on Laravel 5.5 or higher, composer will have registered the provider 
 
 ### Repository pattern 
 
-Default
+#### Default repository
 ```php
 namespace App\Repositories;
 
@@ -59,7 +59,81 @@ class BooksRepository extends Repository
         parent::__construct($model);
     }
 }
+
 ```
+#### Usage in a controller
+```php
+namespace App\Http\Controllers;
+
+use App\Repositories\BooksRepository;
+
+/**
+ * Class BookController
+ *
+ * @package App\Http\Controllers
+ */
+class BookController extends Controller implements ResponsePrefixes
+{
+    /**
+     * @var BooksRepository
+     */
+    protected $repository;
+    
+    /**
+     * BookController constructor.
+     *
+     * @param  BooksRepository  $repository
+     */
+    public function __construct(BooksRepository $repository)
+    {
+        parent::__construct();
+        
+        $this->repository = $repository;
+    }
+    
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(): RedirectResponse
+    {
+        $this->repository->save(request()->validated());
+        
+        ...
+
+        return redirect()->route('book.index');
+    }
+    
+    /**
+     * @param  Book  $book
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Book $book): RedirectResponse
+    {
+        $this->repository->save(request()->validated());
+        
+        ...
+
+        return redirect()->route('book.index');
+    }
+
+    
+    /**
+     * @param  Book  $book
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Book $book): RedirectResponse
+    {
+        $this->repository->delete($book);
+
+        ...
+        
+        return redirect()->route('book.index');
+    }
+}
+```
+
 
 ### Auto discover Form Requests attributes
 
