@@ -110,7 +110,7 @@ class BookController extends Controller implements ResponsePrefixes
      */
     public function update(Book $book): RedirectResponse
     {
-        $this->repository->save(request()->validated());
+        $this->repository->save(request()->validated(), $book);
         
         ...
 
