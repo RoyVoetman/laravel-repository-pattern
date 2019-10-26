@@ -7,7 +7,7 @@ This Laravel package provide developers with useful class preset, artisan comman
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/royvoetman/laravel-extras.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-extras)
 
-### Included features
+### Features
 
 | Feature                                                     | Status                 |
 | ----------------------------------------------------------- | ---------------------- |
