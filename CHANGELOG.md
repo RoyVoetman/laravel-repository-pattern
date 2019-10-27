@@ -8,3 +8,6 @@ All notable changes to `Laravel Extras` will be documented in this file
 ### 1.0.0 - 2019-10-26
 - added documentation
 - fixed bugs in abstract repo class
+
+### 1.0.1 - 2019-10-27
+- improved documentation
