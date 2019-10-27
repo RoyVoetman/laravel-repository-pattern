@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use RoyVoetman\Repositories\Commands\RepositoryMakeCommand;
 
 /**
- * Class ExtrasServiceProvider
+ * Class RepositoriesServiceProvider
  *
  * @package RoyVoetman\Repositories
  */
