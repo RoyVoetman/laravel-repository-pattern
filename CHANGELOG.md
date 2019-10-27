@@ -14,3 +14,6 @@ All notable changes to `Laravel Extras` will be documented in this file
 
 ### 1.0.2 - 2019-10-27
 - added repository generator command
+
+### 1.0.3 - 2019-10-27
+- added laravel 5.7 support
