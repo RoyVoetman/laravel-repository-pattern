@@ -17,13 +17,13 @@ composer require royvoetman/laravel-repository-pattern
 
 ## Getting started
 
-Create a class that extends the `RoyVoetman\Extras\Repository\Repository` class. The corresponding model should be type-hinted within the class constructor and passed to the parent constructor. The parent constructor accepts all classes that extend from the `Illuminate\Database\Eloquent\Model` class.
+Create a class that extends the `RoyVoetman\Repositories\Repository` class. The corresponding model should be type-hinted within the class constructor and passed to the parent constructor. The parent constructor accepts all classes that extend from the `Illuminate\Database\Eloquent\Model` class.
 
 ```php
 namespace App\Repositories;
 
 use App\Models\Book;
-use RoyVoetman\Extras\Repository\Repository;
+use RoyVoetman\Repositories\Repository;
 
 /**
  * Class BooksRepository
@@ -214,7 +214,7 @@ For this example we have an `orders` table with many `order_lines`:
 ```php
 namespace App\Repositories;
 
-use RoyVoetman\Extras\Repository\Repository;
+use RoyVoetman\Repositories\Repository;
 
 /**
  * Class OrdersRepository
@@ -316,9 +316,9 @@ When an error occurs when starting a transaction or during the executing of the 
 To change these error messages or to add specific translations you can run the following command
 
 ```bash
-php artisan vendor:publish --provider="RoyVoetman\Extras\ExtrasServiceProvider" 
+php artisan vendor:publish --provider="RoyVoetman\Repositories\RepositoriesServiceProvider" 
 ```
-This will place the overwritable translations under resources/lang/vendor/laravel-extras
+This will place the overwritable translations under resources/lang/vendor/laravel-repository-pattern
 
 ### Custom error handling logic
 When you want to handle error differently you can overwrite the `*errorMsg` fields in your Repository. If they are equal to a string they will be flashed to the session. When they are a callable (e.g. a Closure) they will be evaluated when the error occurs and nothing will be automatically flashed to the session.
@@ -333,7 +333,7 @@ When you want to handle error differently you can overwrite the `*errorMsg` fiel
 namespace App\Repositories;
 
 use App\Models\Book;
-use RoyVoetman\Extras\Repository\Repository;
+use RoyVoetman\Repositories\Repository;
 
 /**
  * Class BooksRepository
@@ -365,7 +365,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Contributing
 
-Contributions are **welcome** and will be fully **credited**. We accept contributions via Pull Requests on [Github](https://github.com/RoyVoetman/Laravel-Extras).
+Contributions are **welcome** and will be fully **credited**. We accept contributions via Pull Requests on [Github](https://github.com/RoyVoetman/laravel-repository-pattern).
 
 ### Pull Requests
 

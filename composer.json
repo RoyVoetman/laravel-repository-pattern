@@ -1,0 +1,38 @@
+{
+    "name": "royvoetman/laravel-repository-pattern",
+    "description": "An elegant interface to create, update and delete models with relations dependence.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "illuminate/support": "^5.7|^5.8|^5.9|^6.0",
+        "php": "^7.2",
+        "illuminate/database": "^5.7|^6.0",
+        "illuminate/http": "^5.7|^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
+    },
+    "authors": [
+        {
+            "name": "Roy Voetman",
+            "email": "royvoetman@outlook.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "RoyVoetman\\Extras\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RoyVoetman\\Extras\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RoyVoetman\\Repositories\\RepositoriesServiceProvider"
+            ]
+        }
+    }
+}
