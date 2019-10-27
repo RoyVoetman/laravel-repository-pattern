@@ -12,7 +12,6 @@ This Laravel package provide developers with useful class preset, artisan comman
 | [Repository pattern](https://github.com/RoyVoetman/Laravel-Extras#repository-pattern) | Shipped |
 | [Enhanced Form Requests](https://github.com/RoyVoetman/Laravel-Extras#enhanced-form-requests) | Shipped |
 | [View and Route prefixes in Controllers](https://github.com/RoyVoetman/Laravel-Extras#view-and-route-prefixes-in-controllers) | Shipped |
-| Artisan commands to create repositories                      | To do   |
 
 
 
@@ -65,6 +64,8 @@ class BooksRepository extends Repository
 }
 
 ```
+
+> Or use the artisan generation command `php artisan make:repostiory BooksRepository`
 
 
 ### Instantiation
