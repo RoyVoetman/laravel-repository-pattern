@@ -20,3 +20,7 @@ All notable changes to `Laravel Extras` will be documented in this file
 
 ### 1.0.4 - 2019-10-27
 - added laravel 5.7 support within composer.json packages
+
+### 1.0.5 - 2019-10-27
+- fixed `use` statement for InputOption class in repo artisan command
+- fixed versioning issue with composer packages.
