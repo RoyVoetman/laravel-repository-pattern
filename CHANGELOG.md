@@ -24,3 +24,6 @@ All notable changes to `Laravel Extras` will be documented in this file
 ### 1.0.5 - 2019-10-27
 - fixed `use` statement for InputOption class in repo artisan command
 - fixed versioning issue with composer packages.
+
+### 1.0.6 - 2019-10-27
+- Added <?php header to stubs for generator command
