@@ -65,8 +65,17 @@ class BooksRepository extends Repository
 
 ```
 
-> Or use the artisan generation command `php artisan make:repostiory BooksRepository`
+#### Generator command
 
+**Usage**
+```bash
+php artisan make:repository BooksRepository
+```
+
+**Model option**
+```bash
+php artisan make:repository BooksRepository --model=Book
+```
 
 ### Instantiation
 
