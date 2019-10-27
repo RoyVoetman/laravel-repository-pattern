@@ -527,7 +527,7 @@ class BookController extends Controller implements RoutePrefix
 
 ### View and Route prefixes
 
-There is a convenient shortcut when you want to implement the `ViewPrefix` and the `RoutePrefix` interface. You can include the `RoyVoetman\Extras\Contracts\ResponsePrefixes` interface which just extends method interfaces.
+There is a convenient shortcut when you want to implement the `ViewPrefix` and the `RoutePrefix` interface. You can include the `RoyVoetman\Extras\Contracts\ResponsePrefixes` interface which just extends both interfaces.
 
 ```php
 /**
