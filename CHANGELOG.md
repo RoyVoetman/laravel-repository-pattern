@@ -17,3 +17,6 @@ All notable changes to `Laravel Extras` will be documented in this file
 
 ### 1.0.3 - 2019-10-27
 - added laravel 5.7 support
+
+### 1.0.4 - 2019-10-27
+- added laravel 5.7 support within composer.json packages
