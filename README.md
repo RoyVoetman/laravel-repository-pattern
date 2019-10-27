@@ -306,7 +306,7 @@ class UsersRepository extends Repository
       		$data = Arr::forget($data, 'password_confirm');
       
       		// Manipulating password in data array
-		$data['password'] = bcrypt($data['password']; 	
+			$data['password'] = bcrypt($data['password']; 	
         }
                                    
        	// Adding language to data array
