@@ -302,11 +302,11 @@ class UsersRepository extends Repository
     public function save(array $data, Model $model = null): Model
     {      
       	if(Arr::has($data, 'password')) {
-        		// Delete confirm password from data array
-      			$data = Arr::forget($data, 'password_confirm');
+        	// Delete confirm password from data array
+      		$data = Arr::forget($data, 'password_confirm');
       
-      			// Manipulating password in data array
-      			$data['password'] = bcrypt($data['password']; 	
+      		// Manipulating password in data array
+      		$data['password'] = bcrypt($data['password']; 	
         }
                                    
        	// Adding language to data array
@@ -391,10 +391,10 @@ class StoreBook extends Request
     public function rules(): array
     {
         return [
-          	// Validate decoded data
-            'decode_data' => 'required|array',
-          	// You still have access to the encoded data as well
-          	'encoded_data' => 'required'
+          // Validate decoded data
+          'decode_data' => 'required|array',
+          // You still have access to the encoded data as well
+          'encoded_data' => 'required'
         ];
     }
     
@@ -497,7 +497,7 @@ class BookController extends Controller implements RoutePrefix
      */
     public function store(): RedirectResponse
     {
-				...        
+	...        
 
         // Redirect to: `books.index`
         return $this->redirect('index');
