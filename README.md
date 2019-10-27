@@ -302,11 +302,11 @@ class UsersRepository extends Repository
     public function save(array $data, Model $model = null): Model
     {      
       	if(Arr::has($data, 'password')) {
-        	// Delete confirm password from data array
-      		$data = Arr::forget($data, 'password_confirm');
+        		// Delete confirm password from data array
+      	$data = Arr::forget($data, 'password_confirm');
       
-      		// Manipulating password in data array
-      		$data['password'] = bcrypt($data['password']; 	
+      	// Manipulating password in data array
+	$data['password'] = bcrypt($data['password']; 	
         }
                                    
        	// Adding language to data array
