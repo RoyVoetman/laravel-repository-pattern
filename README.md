@@ -7,14 +7,12 @@ This Laravel package provide developers with useful class preset, artisan comman
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/royvoetman/laravel-extras.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-extras)
 
-### Features
-
-| Feature                                                     | Status                 |
-| ----------------------------------------------------------- | ---------------------- |
-| Repository pattern                                          | Shipped                |
-| Enhanced Form Requests                                      | Shipped                |
-| View and Route prefixes in controllers                      | Still to be documented |
-| Artisan commands to create repositories                     | To do                  |
+| Feature                                                      | Status  |
+| ------------------------------------------------------------ | ------- |
+| [Repository pattern](https://github.com/RoyVoetman/Laravel-Extras#repository-pattern) | Shipped |
+| [Enhanced Form Requests](https://github.com/RoyVoetman/Laravel-Extras#enhanced-form-requests) | Shipped |
+| [View and Route prefixes in Controllers](https://github.com/RoyVoetman/Laravel-Extras#view-and-route-prefixes-in-controllers) | Shipped |
+| Artisan commands to create repositories                      | To do   |
 
 
 
@@ -36,11 +34,11 @@ If you are on Laravel 5.4 or earlier, then register the service provider in app.
 If you are on Laravel 5.5 or higher, composer will have registered the provider automatically for you.
 
 ## Repository pattern
-The power of using this Repository pattern is that all database DML (`create`, `update`, `delete`) commands will be handled within transactions. So that multiple queries with relational dependence on each other do not result in inconsistent data. 
+The power of using this Repository pattern is that all database DML (`create`, `update`, `delete`) commands will be handled within transactions. This will prevent that multiple queries with relational dependence on each other do not result in inconsistent data. 
 
 ### Getting started
 
-Create a class that extends the Repository class. You should typehint the corresponding Model class within the classes constructor and pass it to the parent constructor. The parent constructor accepts all classes extended from laravel’s `Illuminate\Database\Eloquent\Model` class.
+Create a class that extends the `RoyVoetman\Extras\Repository\Repository` class. The corresponding model should be type-hinted within the class constructor and passed to the parent constructor. The parent constructor accepts all classes that extend from the `Illuminate\Database\Eloquent\Model` class.
 
 ```php
 namespace App\Repositories;
@@ -71,7 +69,7 @@ class BooksRepository extends Repository
 
 ### Instantiation
 
-The easiest way to instantiate a Repository is by resolving it from Laravel’s IoC container. This is because our type-hinted model will then be automatically injected. This can be done in two ways, typehint the Repository in one of your controller method or using a helper function such as `app()` or  `resolve()` .
+The easiest way to instantiate a Repository is by resolving it from Laravel’s IoC container. This is because our type-hinted model will then be automatically injected. This can be done in two ways, type-hint the Repository in one of your controller methods or using a helper function such as `app()` or  `resolve()` .
 
 **Type-hinting**
 
@@ -109,15 +107,40 @@ public function store()
 
 The provided `data` will be used to create a new database record. If a model is given as a second argument, the model will be updated instead of creating a new one. This will also result in updating the corresponding database record.
 
-If the method executed successfully the new or updated model will be returned. In the case of an unhandled Exception during the creation or update of a Model all actions will be rolled back and `null` will be returned.
+If the method executed successfully the new or updated model will be returned. In the case of an unhandled Exception during the creation or modification of a Model all actions will be rolled back and `null` will be returned.
+
+```php
+// Create a DB record
+$book = $bookRepo->save([
+  'name' => 'Laravel 6',
+  'author' => 'Taylor Otwell'
+]);
+```
+
+```php
+// Update a DB record
+$book = Book::find(1);
+
+$updatedBook = $bookRepo->save([
+  'name' => 'Laravel 6.1',
+  'author' => 'Taylor Otwell'
+], $book);
+```
 
 `delete(Model $model): bool`
 
-An attempt will be made to delete the provided `model` from the database. If the model was deleted successfully `true` will be returned. In the case of an unhandled Exception all actions will be rolled back and `false` will be returned.
+An attempt will be made to delete the provided `model` from the database, if the model was deleted successfully `true` will be returned. In the case of an unhandled Exception, all actions will be rolled back and `false` will be returned.
+
+```php
+// Deleting a DB record
+$book = Book::find(1);
+
+$bookRepo->delete($book);
+```
 
 
 
-### Example
+### Example usage in Controller
 
 ```php
 namespace App\Http\Controllers;
@@ -129,7 +152,7 @@ use App\Repositories\BooksRepository;
  *
  * @package App\Http\Controllers
  */
-class BookController extends Controller implements ResponsePrefixes
+class BookController extends Controller
 {
     /**
      * @var BooksRepository
@@ -193,14 +216,16 @@ class BookController extends Controller implements ResponsePrefixes
 
 
 
-### Handeling relational data
+### Handling relational data
 
-The `save` and `delete` methods are just transaction wrapping functions for the `protected` methods `handleSave` and `handleDelete`. When there is the need to overwrite the default behavior for saving and deleting models the `handle*` methods should be overwritten. This can be every useful if you want to update/delete relational data within the same method.
+The `save` and `delete` methods are just transaction wrapping functions for the `protected` methods `handleSave` and `handleDelete`. When there is the need to overwrite the default behavior for saving and deleting models the `handle*` methods should be overwritten. This can be very useful if you want to update/delete relational data within the same method.
 
-Lets take for example an `orders` table with many `order_lines`:
+For this example we have an `orders` table with many `order_lines`:
 
 ```php
 namespace App\Repositories;
+
+use RoyVoetman\Extras\Repository\Repository;
 
 /**
  * Class OrdersRepository
@@ -254,7 +279,7 @@ class OrdersRepository extends Repository
 
 ### Deleting  / Manipulating / Adding data before its saved
 
-When you are working with passwords for example you want to hash them before you store them in the database. You can do this by overriding the `save` method.
+When you are working with passwords you want to hash them before you store them in the database. You can do this by overriding the `save` method.
 
  ```php
 namespace App\Repositories;
@@ -275,12 +300,14 @@ class UsersRepository extends Repository
      * @return \Illuminate\Database\Eloquent\Model
      */
     public function save(array $data, Model $model = null): Model
-    {    
-      	// Delete confirm password from data array
-      	$data = Arr::forget($data, 'password_confirm');
+    {      
+      	if(Arr::has($data, 'password')) {
+        		// Delete confirm password from data array
+      			$data = Arr::forget($data, 'password_confirm');
       
-      	// Manipulating password in data array
-      	$data['password'] = bcrypt($data['password'];
+      			// Manipulating password in data array
+      			$data['password'] = bcrypt($data['password']; 	
+        }
                                    
        	// Adding language to data array
          $data['language'] = App::getLocale();
@@ -291,10 +318,19 @@ class UsersRepository extends Repository
 }
  ```
 
+> If you only want to trigger specific logic when a model is created or updated you can check if the `$model` parameter equals `null`.
+
+
 
 ## Enhanced Form Requests
 
+### Getting started
+
+Create a class that extends the `RoyVoetman\Extras\Http\Request` class. This class has two new methods compared to the `Illuminate\Foundation\Http\FormRequest` class. There is a `getLanguageKey` method which has to return the language path of where all the translations of the rule attributes are stored. Second, there is a `prepareRequestData` method which is called before the data is passed through the validator.
+
 ### Auto discover Form Requests attributes
+
+When the `getLanguageKey` method is implemented there is no need to define an `attributes` method. All attribute translations will automatically be resolved from the given language path. 
 
 ```php
 use RoyVoetman\Extras\Http\Request;
@@ -338,7 +374,7 @@ return [
 
 ### Preparing Request Data before it is passed to the Validator
 
-If for example the submitted data is sanitized or encoded you can decoded it before it is passed to the validation rules.
+When for example submitted data is sanitised or encoded you can decode it before it is passed to the validator.
 
 ```php
 namespace App\Http\Requests;
@@ -355,7 +391,10 @@ class StoreBook extends Request
     public function rules(): array
     {
         return [
-            'my_data' => 'required|array'
+          	// Validate decoded data
+            'decode_data' => 'required|array',
+          	// You still have access to the encoded data as well
+          	'encoded_data' => 'required'
         ];
     }
     
@@ -363,7 +402,7 @@ class StoreBook extends Request
     {
         $data = $this->all();
       
-      	$data['my_data'] = $this->decode($data['encoded_data']);
+      	$data['decode_data'] = $this->decode($data['encoded_data']);
         
         $this->request->replace($data);
     }
@@ -375,6 +414,133 @@ class StoreBook extends Request
 }
 
 ```
+
+
+
+## View and Route prefixes in Controllers
+
+In a resource controller, it is a common pattern to have all the associated views in the same folder, and the same goes for the location of your routes. With this feature, you can define a prefix which is automatically appended to your view-name or route-name. 
+
+### View prefixes
+
+When you want to use View prefixes your controller will have to implement the `RoyVoetman\Extras\Contracts\ViewPrefix` interface. This interface requires you to add a `viewPrefix` method that returns a `string`.
+
+Second your Controller must include the `RoyVoetman\Extras\Http\Traits\CreatesViews` trait. This trait includes the `view(string $view)` method to the controller which handles the prefixing for us. The best practice is to include this trait in your `BaseController` . This method checks if the `CreatesViews` interface is implemented, if this is not the case this method will behave the same as the `view()` global helper function.
+
+```php
+namespace App\Http\Controllers;
+
+use Illuminate\Contracts\Support\Renderable;
+use RoyVoetman\Extras\Http\Traits\CreatesViews;
+
+/**
+ * Class BookController
+ *
+ * @package App\Http\Controllers
+ */
+class BookController extends Controller implements CreatesViews
+{
+    /**
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function create(): Renderable
+    {
+      	// Return view: `authorized.books.create`
+        return $this->view('create');
+    }
+  
+    /**
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function edit(Book $book): Renderable
+    {
+      	// You can have chain methods like `with()` just like 
+      	// you normally would when using `return view()`
+        return $this->view('edit')->with('book', $book);
+    }
+  
+    /**
+     * @return string
+     */
+    public function viewPrefix(): string
+    {
+        return 'authorized.books';
+    }
+}
+```
+
+### Route prefixes
+
+Route prefixing works the same as View Prefixing except for the following: 
+
+The Controller must implement the `RoyVoetman\Extras\Contracts\RoutePrefix` interface and must include the `RoyVoetman\Extras\Http\Traits\ForwardsRequests` trait. 
+
+Instead of the `viewPrefix` method, you have to include a `routePrefix` method. And instead of the `view(string $view)` method you have to use the `redirect(string $route)` method. When the `RoutePrefix` method is not implemented this method will behave the same as calling `redirect()->route($route)`. 
+
+> Route prefixes only work if you are using [named routes](https://laravel.com/docs/5.8/routing#named-routes). 
+
+```php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\RedirectResponse;
+use RoyVoetman\Extras\Http\Traits\RoutePrefix;
+
+/**
+ * Class BookController
+ *
+ * @package App\Http\Controllers
+ */
+class BookController extends Controller implements RoutePrefix
+{
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(): RedirectResponse
+    {
+				...        
+
+        // Redirect to: `books.index`
+        return $this->redirect('index');
+    }
+  
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Book $book): RedirectResponse
+    {
+        ...
+          
+      	// You can have chain methods like `with()` just like 
+      	// you normally would when using `return redirect()`
+        return $this->redirect('index')->with('status', 'Book updated');
+    }
+  
+    /**
+     * @return string
+     */
+    public function routePrefix(): string
+    {
+        return 'books';
+    }
+}
+```
+
+### View and Route prefixes
+
+There is a convenient shortcut when you want to implement the `ViewPrefix` and the `RoutePrefix` interface. You can include the `RoyVoetman\Extras\Contracts\ResponsePrefixes` interface which just extends method interfaces.
+
+```php
+/**
+ * Interface ResponsePrefixes
+ *
+ * @package App\Interfaces
+ */
+interface ResponsePrefixes extends RoutePrefix, ViewPrefix
+{
+    //
+}
+```
+
 
 
 ## Changelog
