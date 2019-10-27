@@ -1,3 +1,5 @@
+<?php
+
 namespace DummyNamespace;
 
 use RoyVoetman\Extras\Repository\Repository;
