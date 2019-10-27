@@ -1,38 +1,19 @@
 {
     "name": "royvoetman/laravel-extras",
-    "description": "This Laravel package provide developers with useful class preset, artisan commands, and helpers that are not included in Laravel by default.",
+    "description": "This Laravel package provide developers with a useful wrapper package that includes a bundle of handy third party packages.",
     "type": "library",
     "license": "MIT",
     "require": {
-        "illuminate/support": "^5.7|^5.8|^5.9|^6.0",
         "php": "^7.2",
-        "illuminate/database": "^5.7|^6.0",
-        "illuminate/http": "^5.7|^6.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^8.1"
+        "royvoetman/laravel-flash-alerts": "^1.0",
+        "royvoetman/laravel-prefixer": "^1.0",
+        "royvoetman/laravel-enhanced-requests": "^1.0",
+        "royvoetman/laravel-repository-pattern": "^1.0"
     },
     "authors": [
         {
             "name": "Roy Voetman",
             "email": "royvoetman@outlook.com"
         }
-    ],
-    "autoload": {
-        "psr-4": {
-            "RoyVoetman\\Extras\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "RoyVoetman\\Extras\\Test\\": "tests"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "RoyVoetman\\Extras\\ExtrasServiceProvider"
-            ]
-        }
-    }
+    ]
 }

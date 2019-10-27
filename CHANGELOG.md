@@ -27,3 +27,8 @@ All notable changes to `Laravel Extras` will be documented in this file
 
 ### 1.0.6 - 2019-10-27
 - Added <?php header to stubs for generator command
+
+### 2.0.0 - 2019-10-30
+- Moved all extras features to a standalone package to provide a more modular system
+- Added the HTML and Form builders package from LaravelCollective
+- Added the Laravel Flash Alerts package
