@@ -3,6 +3,7 @@
 namespace RoyVoetman\Extras\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Symfony\Component\Console\Input\InputOption;
 
 /**
  * Class RepositoryMakeCommand
