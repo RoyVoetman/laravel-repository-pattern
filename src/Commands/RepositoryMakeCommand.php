@@ -5,7 +5,7 @@ namespace RoyVoetman\Extras\Commands;
 use Illuminate\Console\GeneratorCommand;
 
 /**
- * Class CreateRepository
+ * Class RepositoryMakeCommand
  *
  * @package RoyVoetman\Extras\Commands
  */
@@ -39,6 +39,10 @@ class RepositoryMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
+        if ($this->option('model')) {
+            return __DIR__ . '/stubs/repository-model.stub';
+        }
+        
         return __DIR__.'/stubs/repository.stub';
     }
     
@@ -51,5 +55,34 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function getDefaultNamespace($rootNamespace)
     {
         return $rootNamespace.'\Repositories';
+    }
+    
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [
+            ['model', 'm', InputOption::VALUE_OPTIONAL, 'Create repository based on model.'],
+        ];
+    }
+    
+    /**
+     * Build the class with the given name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function buildClass($name)
+    {
+        $stub = parent::buildClass($name);
+        
+        if ($this->option('model')) {
+            $stub = str_replace('DummyModel', $this->option('model'), $stub);
+        }
+        
+        return $stub;
     }
 }

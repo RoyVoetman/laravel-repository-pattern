@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Class Repository
  *
- * @package App\Repositories
+ * @package RoyVoetman\Extras\Repository
  */
 abstract class Repository
 {

@@ -5,7 +5,7 @@ namespace RoyVoetman\Extras\Contracts;
 /**
  * Interface RoutePrefix
  *
- * @package App\Interfaces
+ * @package RoyVoetman\Extras\Contracts
  */
 interface RoutePrefix
 {

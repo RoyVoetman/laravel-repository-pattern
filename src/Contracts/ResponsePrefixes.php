@@ -5,7 +5,7 @@ namespace RoyVoetman\Extras\Contracts;
 /**
  * Interface ResponsePrefixes
  *
- * @package App\Interfaces
+ * @package RoyVoetman\Extras\Contracts
  */
 interface ResponsePrefixes extends RoutePrefix, ViewPrefix
 {

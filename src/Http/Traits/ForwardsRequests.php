@@ -6,9 +6,9 @@ use RoyVoetman\Extras\Contracts\RoutePrefix;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Class GeneratesResponses
+ * Trait ForwardsRequests
  *
- * @package App
+ * @package RoyVoetman\Extras\Http\Traits
  */
 trait ForwardsRequests
 {

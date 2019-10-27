@@ -8,7 +8,7 @@ use Illuminate\Contracts\View\View;
 /**
  * Trait CreatesViews
  *
- * @package App\Traits
+ * @package RoyVoetman\Extras\Http\Traits
  */
 trait CreatesViews
 {

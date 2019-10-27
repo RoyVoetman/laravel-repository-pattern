@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class Request
  *
- * @package App\Http\Requests
+ * @package RoyVoetman\Extras\Http
  */
 abstract class Request extends FormRequest implements \RoyVoetman\Extras\Contracts\Request
 {
