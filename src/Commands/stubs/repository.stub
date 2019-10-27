@@ -1,0 +1,16 @@
+namespace DummyNamespace;
+
+use RoyVoetman\Extras\Repository\Repository;
+
+class DummyRepository extends Repository
+{
+    /**
+     * DummyRepository constructor.
+     *
+     * @param YourModel $model
+     */
+    public function __construct(YourModel $model)
+    {
+        parent::__construct($model);
+    }
+}
