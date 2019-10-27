@@ -20,12 +20,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "RoyVoetman\\Extras\\": "src"
+            "RoyVoetman\\Repositories\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "RoyVoetman\\Extras\\Test\\": "tests"
+            "RoyVoetman\\Repositories\\Test\\": "tests"
         }
     },
     "extra": {
