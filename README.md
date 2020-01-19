@@ -233,7 +233,7 @@ class OrdersRepository extends Repository
      */
     protected function handleSave(array $data, Model $order = null): Model
     {
-      	// Create order with the 'lines' key from the $data array
+      	// Create order without the 'lines' key from the $data array
         $order = parent::handleSave(Arr: :except($data, 'lines'), $order);
         
       	// Add order lines if 'lines' key is defined in $data array
