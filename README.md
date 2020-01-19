@@ -3,7 +3,7 @@
 ## Introduction
 An elegant interface to create, update and delete models with relational dependence.
 
-The power of using this Repository pattern is that all database DML (`create`, `update`, `delete`) commands will be handled within transactions. This will prevent that multiple queries with relational dependence on each other do not result in inconsistent data. 
+The power of using this Repository pattern is that all database DML (`create`, `update`, `delete`) commands will be handled within transactions. This will prevent that multiple queries with relational dependence on each other result in inconsistent data. 
 
 [![Latest Version](https://img.shields.io/packagist/v/royvoetman/laravel-repository-pattern.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-repository-pattern)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
