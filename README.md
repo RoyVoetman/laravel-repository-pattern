@@ -321,7 +321,7 @@ php artisan vendor:publish --provider="RoyVoetman\Repositories\RepositoriesServi
 This will place the overwritable translations under resources/lang/vendor/laravel-repository-pattern
 
 ### Custom error handling logic
-When you want to handle error differently you can overwrite the `*errorMsg` fields in your Repository. If they are equal to a string they will be flashed to the session. When they are a callable (e.g. a Closure) they will be evaluated when the error occurs and nothing will be automatically flashed to the session.
+When you want to handle errors differently you can overwrite the `*errorMsg` fields in your Repository. If they are equal to a string they will be flashed to the session. When they are a callable (e.g. a Closure) they will be evaluated when the error occurs and nothing will be automatically flashed to the session.
 
 | Field                     | Default  |
 | ------------------------- | -------- |
