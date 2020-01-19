@@ -1,7 +1,7 @@
 # Laravel Repository Pattern
 
 ## Introduction
-An elegant interface to create, update and delete models with relations dependence.
+An elegant interface to create, update and delete models with relational dependence.
 
 The power of using this Repository pattern is that all database DML (`create`, `update`, `delete`) commands will be handled within transactions. This will prevent that multiple queries with relational dependence on each other do not result in inconsistent data. 
 
