@@ -22,8 +22,8 @@ Additional pipes can be written to perform a variety of tasks besides modifying 
 A translation pipe might save all translations for certain columns to a separate translations table.
 A transaction pipe might run specific groups of queries in a database transaction.
 
-There are a few out of the box pipes included in this package, including pipes for password hashing and database transactions.
-All of these default pipes will be elaborated on in the Pipes section in addition to information on how to create your own pipes.
+There are a few pipes already included in this package, including pipes for password hashing and database transactions.
+All of these default pipes will be elaborated up on in the Pipes section in addition to information on how to define your own pipes.
 
 ## Installation
 
@@ -152,7 +152,7 @@ class BeforePipe
 However, this pipe would perform its task after the data manipulations are made persisted:
 
 ```php
-class AfterPipes
+class AfterPipe
 {
     public function handle($data, Closure $next)
     {
@@ -194,9 +194,9 @@ class BooksRepository extends Repository implements UsesTransaction
 ```
 
 By implementing `UsesTransaction` the case in which inserting a record or saving the translations raises an exception will not cause data inconsistencies.
-In fact, when an exception is raise the transaction is rolled back.  
+In fact, when an exception is raised the transaction will be rolled back.  
 
-Furthermore, the `transaction()` method could be used to specify that only the this pipeline should be run inside a transaction.
+Furthermore, the `transaction()` method could be used to specify that only the current pipeline should be run inside a transaction.
 
 ```php
 $book = $books->transaction()->save([
