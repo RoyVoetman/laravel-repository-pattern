@@ -15,7 +15,7 @@ class RepositoriesServiceProvider extends ServiceProvider
     /**
      * @var array
      */
-    protected $commands = [
+    protected array $commands = [
         RepositoryMakeCommand::class
     ];
     

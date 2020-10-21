@@ -40,10 +40,6 @@ class RepositoryMakeCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        if ($this->option('model')) {
-            return __DIR__.'/stubs/repository-model.stub';
-        }
-        
         return __DIR__.'/stubs/repository.stub';
     }
     
@@ -81,10 +77,6 @@ class RepositoryMakeCommand extends GeneratorCommand
     protected function buildClass($name)
     {
         $stub = parent::buildClass($name);
-        
-        if ($this->option('model')) {
-            $stub = str_replace('DummyModel', $this->option('model'), $stub);
-        }
         
         return $stub;
     }
