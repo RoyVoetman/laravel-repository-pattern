@@ -69,9 +69,7 @@ php artisan make:repository BooksRepository
 To create a new record in the database, create the associated repository for the related model, pass the model attributes as an associative array, then call the save method.
 
 ```php
-$books = resolve(BooksRepository::class);
-
-$book = $books->save([
+$book = (new BooksRepository())->save([
   'name' => 'Laravel',
   'author' => 'Taylor Otwell'
 ]);
@@ -85,9 +83,7 @@ To update a model, you should retrieve it, pass any model attributes you which t
 ```php
 $book = Book::find(1);
 
-$books = resolve(BooksRepository::class);
-
-$updatedBook = $books->save([
+$updatedBook = (new BooksRepository())->save([
   'name' => 'Laravel!',
   'author' => 'Taylor Otwell'
 ], $book);
@@ -102,9 +98,7 @@ To delete a model, retrieve the model, pass the model to the repository, and the
 ```php
 $book = Book::find(1);
 
-$books = resolve(BooksRepository::class);
-
-$books->delete($book);
+(new BooksRepository())->delete($book);
 ```
 
 ## Pipes
