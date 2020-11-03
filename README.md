@@ -6,16 +6,16 @@ Middleware for Eloquent Models
 [![Total Downloads](https://img.shields.io/packagist/dt/royvoetman/laravel-repository-pattern.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-repository-pattern)
 
 ## Introduction 
-This package provides a convenient mechanism of grouping data manipulation logic which is equivalent to Laravel's native HTTP middleware.
+This package provides a convenient mechanism of grouping data manipulation logic, which is equivalent to Laravel's native HTTP middleware.
 However, to prevent any confusion with HTTP middleware hereafter this mechanism will be referred to in its more general form called a `pipeline`.
 In fact, Laravel provides its own Pipeline implementation which is used by middleware under the hood.
 
-A pipeline is composed out of several different pipes and a so-called passable.
-In the context of HTTP middleware the passable is the HTTP response object. 
-Conversely, in the context of Eloquent the model-data is classified as the passable.
-Typically, each pipe will filter or alter the passable that is send trough your pipeline.
-As a result creating an easily extensible design pattern where each pipe is defined in its own self-contained class.
-For example, this package provides a pipe that automatically hashes password before saving them to the database.
+A pipeline is a design pattern that composes several different classes (`pipes`) and applies them consecutively. All pipes receive a so-called passable and result in a so-called returnable.
+In the context of HTTP middleware, the passable is the HTTP request object and the returnable is the HTTP response object. 
+Conversely, in the context of a repository, the `model-data array` is classified as the passable and the resulting Eloquent model object is the returnable.
+Typically, each pipe will filter or alter the passable that is sent through the pipeline.
+As a result, creating an easily extensible architecture where each pipe concerns itself with one task.
+For example, this package provides a pipe that automatically hashes passwords before saving them to the database.
 Thus, centralizing your password hashing logic and thereby removing responsibility from your other classes.
 
 Additional pipes can be written to perform a variety of tasks besides modifying column values.
@@ -23,7 +23,7 @@ A translation pipe might save all translations for certain columns to a separate
 A transaction pipe might run specific groups of queries in a database transaction.
 
 There are a few pipes already included in this package, including pipes for password hashing and database transactions.
-All of these default pipes will be elaborated up on in the Pipes section in addition to information on how to define your own pipes.
+All of these default pipes will be elaborated upon, along with information on how to define your own pipes.
 
 ## Installation
 
@@ -36,8 +36,8 @@ composer require royvoetman/laravel-repository-pattern
 ### Defining repositories
 
 First, create a class that extends the `RoyVoetman\Repositories\Repository` class.
-Second, the repository should be made aware of what model it is associated to by equating the $model field to the fully qualified classname of the model 
-Finally, pipes that should always run can be defined by setting the `$pipes` field.
+Second, the repository should be made aware of what model it is associated with by equating the `$model` field to the fully qualified class name of the model.
+Finally, pipes that should be applied to every action should be stated by defining the `$pipes` field.
 
 ```php
 class BooksRepository extends Repository
@@ -66,7 +66,7 @@ php artisan make:repository BooksRepository
 
 #### Inserts
 
-To create a new record in the database, create the associated repository for the related model, pass the model attributes as an associative array, then call the save method.
+To create a new database record, instantiate the associated repository, pass the model attributes as an associative array, then call the save method.
 
 ```php
 $book = (new BooksRepository())->save([
@@ -78,7 +78,7 @@ $book = (new BooksRepository())->save([
 #### Updates
 
 The save method may also be used to update models that already exist in the database.
-To update a model, you should retrieve it, pass any model attributes you which to update in combination with the retrieve model, and then call the save method.
+To update a model, you should retrieve it, pass any model attributes you which to update in combination with the retrieved model, and then call the save method.
 
 ```php
 $book = Book::find(1);
@@ -105,18 +105,18 @@ $book = Book::find(1);
 
 ### Defining Pipes
 
-To create a new pipe, use the make:pipe generator command:
+To create a new pipe, use the `make:pipe` generator command:
 ```bash
 php artisan make:pipe HashPassword
 ```
 
-This command will place a new HashPassword class within your app/Repositories/Pipes directory.
-In this pipe, we will check if a password key has been defined. If so, the password will be hashed and override the plaintext password.
+This command will place a new `HashPassword` class within your `app/Repositories/Pipes` directory.
+In this pipe, we will check if a password key has been defined. If so, the password will be hashed and replaced with the plain text password.
 
 ```php
 class HashPassword
 {
-    public function handle($data, Closure $next)
+    public function handle($data, Closure $next): Model
     {
         if(Arr::has($data, 'password')) {
             $data['password'] = bcrypt($data['password']);
@@ -136,7 +136,8 @@ class BeforePipe
 {
     public function handle($data, Closure $next)
     {
-        // Perform action
+        // Perform actions on the model-data
+        // e.g. hashing passwords
 
         return $next($data);
     }
@@ -148,11 +149,12 @@ However, this pipe would perform its task after the data manipulations are made 
 ```php
 class AfterPipe
 {
-    public function handle($data, Closure $next)
+    public function handle($data, Closure $next): Model
     {
         $model = $next($data);
 
-        // Perform action
+        // Perform actions on Eloquent model
+        // e.g. saving relationships
 
         return $model;
     }
@@ -169,7 +171,7 @@ WIP
 WIP
 
 ## Transactions
-This package provides a transaction pipe which can be used to run a certain pipeline into a database transaction.
+This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
 For example, the `UsesTransaction` interface could be implemented by the repository to indicate that every pipeline should run in a transaction.
 
 ```php
@@ -198,6 +200,8 @@ $book = $books->transaction()->save([
   'author' => 'Taylor Otwell'
 ]);
 ```
+
+> Caution: The Transaction pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the `$pipes` field.
 
 ### Specify attempts
 WIP
