@@ -162,7 +162,7 @@ class AfterPipe
 ```
 
 ### Pipe Groups
-Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the `$pipeGroups` field in your respository. For example, you may want to apply special logic when saving a VIP user as oppose to a regular user:
+Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the `$pipeGroups` field in your repository. For example, you may want to apply special logic when saving a VIP user as opposed to a regular user:
 
 ```php
 class UsersRepository extends Repository
