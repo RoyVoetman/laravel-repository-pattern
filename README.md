@@ -162,9 +162,39 @@ class AfterPipe
 ```
 
 ### Pipe Groups
-Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the $pipeGroups property in your respository.
+Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the $pipeGroups property in your respository. For example, you may want to apply special logic when saving a VIP user as oppose to a regular user:
 
-Out of the box, this package comes with the following pipe groups which will be automatically applied when specific actions occure:
+```
+class UsersRepository extends Repository
+{
+    /**
+     * @var string
+     */
+    protected string $model = Book::class;
+
+    /**
+     * @var array|\string[][]
+     */
+    protected array $pipeGroups = [
+        'vip' => [
+            AddVipPermissions::class,
+            EnrollToVipChannel::class
+        ]
+    ];
+}
+```
+
+You may then apply the group by calling the `withPipeGroup` method.
+```
+$user = (new UsersRepository())->withPipeGroup('vip')->save([
+  'name' => 'Roy Voetman',
+  'email' => 'info@example.com'
+  ...
+]);
+```
+
+#### Auto-applied pipe groups
+Out of the box, this package comes with the following pipe groups which will be automatically applied when specific actions occur:
 
 | Group | Applied when |
 |---------|---|
