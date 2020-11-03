@@ -162,7 +162,16 @@ class AfterPipe
 ```
 
 ### Pipe Groups
-WIP
+Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the $pipeGroups property in your respository.
+
+Out of the box, this package comes with the following pipe groups which will be automatically applied when specific actions occure:
+
+| Group | Action |
+|---------|---|
+| `save`  | Applied when a model is saved (i.e. being created or updated) |
+| `create`| Only applied when a model is created |
+| `update`| Only applied when a model is updated  |
+| `delete`| Only applied when a model is deleted  |
 
 ### Pipe Parameters
 WIP
