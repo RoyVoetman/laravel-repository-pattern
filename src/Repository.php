@@ -20,7 +20,7 @@ abstract class Repository
      *
      * @var string
      */
-    private string $model;
+    protected string $model;
     
     /**
      * The repo's global pipe stack.
