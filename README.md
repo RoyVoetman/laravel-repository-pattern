@@ -166,12 +166,12 @@ Sometimes you may want to group several pipes under a single key to make them ea
 
 Out of the box, this package comes with the following pipe groups which will be automatically applied when specific actions occure:
 
-| Group | Action |
+| Group | Applied when |
 |---------|---|
 | `save`  | Applied when a model is saved (i.e. being created or updated) |
-| `create`| Only applied when a model is created |
-| `update`| Only applied when a model is updated  |
-| `delete`| Only applied when a model is deleted  |
+| `create`| A a new model is created |
+| `update`| When an exisiting model is updated  |
+| `delete`| When a model is deleted  |
 
 ### Pipe Parameters
 WIP
