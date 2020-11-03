@@ -164,7 +164,7 @@ class AfterPipe
 ### Pipe Groups
 Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the $pipeGroups property in your respository. For example, you may want to apply special logic when saving a VIP user as oppose to a regular user:
 
-```
+```php
 class UsersRepository extends Repository
 {
     /**
@@ -185,7 +185,7 @@ class UsersRepository extends Repository
 ```
 
 You may then apply the group by calling the `withPipeGroup` method.
-```
+```php
 $user = (new UsersRepository())->withPipeGroup('vip')->save([
   'name' => 'Roy Voetman',
   'email' => 'info@example.com'
