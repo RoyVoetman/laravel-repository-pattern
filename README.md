@@ -194,7 +194,7 @@ $user = (new UsersRepository())->withPipeGroup('vip')->save([
 ```
 
 #### Auto-applied pipe groups
-Out of the box, this package comes with the following pipe groups which will be automatically applied when specific actions occur:
+Out of the box, this package comes with the following pipe groups that will be automatically applied when specific actions occur:
 
 | Group | Applied when |
 |---------|---|
