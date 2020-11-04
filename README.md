@@ -174,8 +174,8 @@ The pipes defined in this array will automatically be applied when the correspon
 |---------|---|
 | `create`| A new model is created |
 | `update`| An existing model is updated  |
-| `save`  | Applied when a model is saved (i.e. being created or updated) |
-| `delete`| When a model is deleted  |
+| `save`  | A model is saved (i.e. being created or updated) |
+| `delete`| A model is deleted  |
 
 ```php
 class BooksRepository extends Repository
