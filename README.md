@@ -174,7 +174,7 @@ The pipes defined in this array will automatically be applied when the correspon
 |---------|---|
 | `create`| A new model is created |
 | `update`| An existing model is updated  |
-| `save`  | A model is saved (i.e. being created or updated) |
+| `save`  | A model is being created or updated |
 | `delete`| A model is deleted  |
 
 ```php
