@@ -180,8 +180,6 @@ The pipes defined in this array will automatically be applied when the correspon
 ```php
 class BooksRepository extends Repository
 {
-    ...
-
     /**
      * @var string[]
      */
@@ -191,6 +189,8 @@ class BooksRepository extends Repository
         'save' => [...],
         'delete' => [...]
     ];
+    
+    ...
 }
 ```
 
