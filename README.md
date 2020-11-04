@@ -173,7 +173,7 @@ The pipes defined in this array will automatically be applied when the correspon
 | Action | Applied when |
 |---------|---|
 | `create`| A new model is created |
-| `update`| When an existing model is updated  |
+| `update`| An existing model is updated  |
 | `save`  | Applied when a model is saved (i.e. being created or updated) |
 | `delete`| When a model is deleted  |
 
