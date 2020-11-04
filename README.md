@@ -234,7 +234,7 @@ $book = $books->transaction()->save([
 ]);
 ```
 
-> Caution: the Transaction pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the `$pipes` field.
+> Caution: the `Transaction` pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the `$pipes` field.
 
 ## Changelog
 
