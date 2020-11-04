@@ -1,12 +1,12 @@
 <?php
 
-namespace RoyVoetman\Repositories;
+namespace App\Repositories;
 
+use App\Repositories\Pipes\Transaction;
+use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
-use RoyVoetman\Repositories\Interfaces\UsesTransaction;
-use RoyVoetman\Repositories\Pipes\Transaction;
 
 /**
  * Class Repository
@@ -20,23 +20,16 @@ abstract class Repository
      *
      * @var string
      */
-    protected string $model;
+    private string $model;
     
     /**
-     * The repo's global pipe stack.
+     * The pipes for specific by action.
      *
-     * These pipes are run during every action to the database.
+     * These pipes are automatically applied when specific actions occur.
      *
      * @var array
      */
-    protected array $pipes = [];
-    
-    /**
-     * Multiple pipes can be grouped together for convenience.
-     *
-     * @var array
-     */
-    protected array $pipeGroups = [
+    protected array $pipes = [
         'create' => [],
         'save' => [],
         'update' => [],
@@ -44,11 +37,37 @@ abstract class Repository
     ];
     
     /**
+     * Multiple pipes can be grouped together for convenience.
+     *
+     * @var array
+     */
+    protected array $pipeGroups = [];
+    
+    /**
+     * The repo's pipe stack.
+     *
+     * These pipes will be applied in the pipeline.
+     *
+     * @var array
+     */
+    private array $pipeStack = [];
+    
+    /**
      * These pipes groups are automatically added when specific action occurs.
      *
      * @var array
      */
     protected array $primitiveGroups = ['create', 'save', 'update', 'delete'];
+    
+    /**
+     * Repository constructor.
+     */
+    protected function __construct()
+    {
+        if ($this instanceof UsesTransaction) {
+            $this->transaction();
+        }
+    }
     
     /**
      * Save the model to the database via a pipeline.
@@ -60,15 +79,9 @@ abstract class Repository
      */
     public function save(array $data, ?Model $model = null): ?Model
     {
-        $this->withPipeGroup([
-            'save',
-            !is_null($model) ? 'update' : 'create'
-        ]);
+        $this->applyPrimitives(is_null($model) ? 'create' : 'update');
         
-        return resolve(Pipeline::class)
-            ->send($data)
-            ->through($this->pipes)
-            ->then(fn($data) => $this->performSave($data, $model));
+        return $this->pipeline($data, fn($data) => $this->performSave($data, $model));
     }
     
     /**
@@ -80,12 +93,9 @@ abstract class Repository
      */
     public function delete(Model $model): ?bool
     {
-        $this->withPipeGroup('delete');
+        $this->applyPrimitives('delete');
         
-        return resolve(Pipeline::class)
-            ->send($model)
-            ->through($this->pipes)
-            ->then(fn($model) => $model->delete());
+        return $this->pipeline($model, fn($model) => $model->delete());
     }
     
     /**
@@ -104,20 +114,14 @@ abstract class Repository
         $groups = is_array($group) ? $group : func_get_args();
         
         foreach ($groups as $group) {
-            // The Undefined index error will de neglected when a primitive pipe group is not defined
-            // This removes the need to manually add all primitive groups when overriding $pipeGroups
-            if (!array_key_exists($group, $this->pipeGroups) && in_array($group, $this->primitiveGroups)) {
-                continue;
-            }
-            
-            $this->pipes = array_merge($this->pipes, $this->pipeGroups[$group]);
+            $this->pipeStack = array_merge($this->pipeStack, $this->pipeGroups[$group]);
         }
         
         return $this;
     }
     
     /**
-     * Add specific pipe to the pipe group.
+     * Apply the given pipe to the pipe stack.
      *
      * @param $pipe
      *
@@ -125,7 +129,7 @@ abstract class Repository
      */
     public function withPipe($pipe): self
     {
-        $this->pipes[] = $pipe;
+        $this->pipeStack[] = $pipe;
         
         return $this;
     }
@@ -139,23 +143,71 @@ abstract class Repository
      */
     public function transaction(): self
     {
-        array_unshift($this->pipes, Transaction::class);
+        array_unshift($this->pipeStack, Transaction::class);
         
         return $this;
     }
     
     /**
-     * Retrieve all pipes
+     * Retrieve all pipes that should be applied
      *
      * @return array
      */
-    protected function pipes(): array
+    protected function pipeStack(): array
     {
         if ($this instanceof UsesTransaction) {
             $this->transaction();
         }
         
-        return $this->pipes;
+        return $this->pipeStack;
+    }
+    
+    /**
+     * Run the passable through the pipeline stack.
+     *
+     * @param $passable
+     * @param $destination
+     *
+     * @return mixed
+     */
+    protected function pipeline($passable, Closure $destination)
+    {
+        $result = resolve(Pipeline::class)
+            ->send($passable)
+            ->through($this->pipeStack())
+            ->then($destination);
+        
+        $this->pipeStack = [];
+        
+        return $result;
+    }
+    
+    /**
+     * Add the primitive pipes associated with the given action to the pipeline stack.
+     *
+     * @param $action
+     *
+     * @return $this
+     */
+    public function applyPrimitives(string $action): self
+    {
+        $actions = Arr::wrap($action);
+        
+        if (in_array($action, ['create', 'update'])) {
+            $actions[] = ['save'];
+        }
+        
+        foreach ($actions as $action) {
+            // The Undefined index error will de neglected.
+            // This removes the need to manually add all primitives when overriding the $pipes field
+            if (!isset($this->pipes[$action])) {
+                continue;
+            }
+            
+            $this->pipeStack = array_merge($this->pipeStack, $this->pipes[$action]);
+        }
+        
+        return $this;
     }
     
     /**
