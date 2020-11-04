@@ -37,7 +37,7 @@ composer require royvoetman/laravel-repository-pattern
 
 First, create a class that extends the `RoyVoetman\Repositories\Repository` class.
 Second, the repository should be made aware of what model it is associated with by equating the `$model` field to the fully qualified class name of the model.
-Finally, pipes that should be applied to every action should be stated by defining the `$pipes` field.
+Finally, pipes can be defined by stating them in the `$pipes` field.
 
 ```php
 class BooksRepository extends Repository
@@ -50,7 +50,10 @@ class BooksRepository extends Repository
     /**
      * @var string[]
      */
-    protected $pipes = [Translate::class];
+    protected $pipes = [
+        'save' => [Translate::class],
+        'delete' => [DeleteTranslations::class]
+    ];
 }
 ```
 
@@ -127,6 +130,8 @@ class HashPassword
 }
 ```
 
+> Pipes that are applied to a **delete** action receive an Eloquent Model as the first parameter instead of a `$data` array with model-data.
+
 #### Before & After Pipes
 Whether a pipe runs before or after the insertion/update/deletion of the model depends on the pipe itself.
 For example, the following middleware would perform some task before any data manipulations are made persistent:
@@ -158,6 +163,34 @@ class AfterPipe
 
         return $model;
     }
+}
+```
+
+### Using Pipes
+This package defines the following actions that can be defined in the `$pipes` field of your repository. 
+The pipes defined in this array will automatically be applied when the corresponding action occurs:
+
+| Action | Applied when |
+|---------|---|
+| `create`| A a new model is created |
+| `update`| When an existing model is updated  |
+| `save`  | Applied when a model is saved (i.e. being created or updated) |
+| `delete`| When a model is deleted  |
+
+```php
+class BooksRepository extends Repository
+{
+    ...
+
+    /**
+     * @var string[]
+     */
+    protected $pipes = [
+        'create' => [...],
+        'update' => [...],
+        'save' => [...],
+        'delete' => [...]
+    ];
 }
 ```
 
@@ -193,22 +226,6 @@ $user = (new UsersRepository())->withPipeGroup('vip')->save([
 ]);
 ```
 
-#### Auto-applied pipe groups
-Out of the box, this package comes with the following pipe groups that will automatically be applied when specific actions occur:
-
-| Group | Applied when |
-|---------|---|
-| `save`  | Applied when a model is saved (i.e. being created or updated) |
-| `create`| A a new model is created |
-| `update`| When an exisiting model is updated  |
-| `delete`| When a model is deleted  |
-
-### Pipe Parameters
-WIP
-
-### Pipe Closures
-WIP
-
 ## Transactions
 This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
 For example, the `UsesTransaction` interface could be implemented by the repository to indicate that every pipeline should run in a transaction.
@@ -241,9 +258,6 @@ $book = $books->transaction()->save([
 ```
 
 > Caution: The Transaction pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the `$pipes` field.
-
-### Specify attempts
-WIP
 
 ## Changelog
 
