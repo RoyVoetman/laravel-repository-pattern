@@ -42,15 +42,9 @@ Finally, pipes can be defined by stating them in the `$pipes` field.
 ```php
 class BooksRepository extends Repository
 {
-    /**
-     * @var string
-     */
-    protected $model = Book::class;
+    protected string $model = Book::class;
 
-    /**
-     * @var string[]
-     */
-    protected $pipes = [
+    protected array $pipes = [
         'save' => [Translate::class],
         'delete' => [DeleteTranslations::class]
     ];
@@ -180,10 +174,7 @@ These arrays will automatically be applied when the corresponding actions occur:
 ```php
 class BooksRepository extends Repository
 {
-    /**
-     * @var string[]
-     */
-    protected $pipes = [
+    protected array $pipes = [
         'create' => [...],
         'update' => [...],
         'save' => [...],
@@ -200,14 +191,8 @@ Sometimes you may want to group several pipes under a single key to make them ea
 ```php
 class UsersRepository extends Repository
 {
-    /**
-     * @var string
-     */
     protected string $model = Book::class;
 
-    /**
-     * @var array|\string[][]
-     */
     protected array $pipeGroups = [
         'vip' => [
             AddVipPermissions::class,
@@ -233,15 +218,7 @@ For example, the `UsesTransaction` interface could be implemented by the reposit
 ```php
 class BooksRepository extends Repository implements UsesTransaction
 {
-    /**
-     * @var string
-     */
-    protected $model = Book::class;
-
-    /**
-     * @var string[]
-     */
-    protected $pipes = [Translate::class];
+    protected string $model = Book::class;
 }
 ```
 
