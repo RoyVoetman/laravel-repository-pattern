@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
-use App\Repositories\Pipes\Transaction;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
+use RoyVoetman\Repositories\Interfaces\UsesTransaction;
+use RoyVoetman\Repositories\Pipes\Transaction;
 
 /**
  * Class Repository
