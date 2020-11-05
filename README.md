@@ -21,7 +21,6 @@ Thus, centralizing your password hashing logic and thereby removing responsibili
 Additional pipes can be written to perform a variety of tasks besides modifying column values.
 A translation pipe might save all translations for certain columns to a separate translations table.
 A transaction pipe might run specific groups of queries in a database transaction.
-
 There are a few pipes already included in this package, including pipes for password hashing and database transactions.
 All of these default pipes will be elaborated upon, along with information on how to define your own pipes.
 
