@@ -6,7 +6,7 @@ Middleware for Eloquent Models
 [![Total Downloads](https://img.shields.io/packagist/dt/royvoetman/laravel-repository-pattern.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-repository-pattern)
 
 ## Introduction 
-This package provides a convenient mechanism of grouping data manipulation logic, which is equivalent to Laravel's native HTTP middleware.
+This package provides a convenient mechanism for grouping data manipulation logic, which is equivalent to Laravel's native HTTP middleware.
 However, to prevent any confusion with HTTP middleware hereafter this mechanism will be referred to in its more general form called a `pipeline`.
 In fact, Laravel provides its own Pipeline implementation which is used by middleware under the hood.
 
