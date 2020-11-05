@@ -160,7 +160,7 @@ class AfterPipe
 ```
 
 ### Using Pipes
-This package defines the following actions that can be used in the `$pipes` array in your repository. 
+This package defines the following actions that can be used in the `$pipes` array of your repository. 
 These arrays will automatically be applied when the corresponding actions occur:
 
 | Action | Applied when |
