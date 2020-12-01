@@ -2,6 +2,7 @@
 
 namespace RoyVoetman\Repositories\Pipes;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 class EncryptPassword
@@ -22,7 +23,7 @@ class EncryptPassword
      *
      * @return mixed
      */
-    public function handle($data, \Closure $next)
+    public function handle($data, \Closure $next): Model
     {
         if(Arr::has($data, $this->passwordKey)) {
             Arr::forget($data, $this->confirmationKey);

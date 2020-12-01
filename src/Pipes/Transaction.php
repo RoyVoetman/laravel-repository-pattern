@@ -7,29 +7,14 @@ use Illuminate\Support\Facades\DB;
 class Transaction
 {
     /**
-     * @var int
-     */
-    protected int $attempts;
-
-    /**
-     * Transaction constructor.
-     *
-     * @param  int  $attempts
-     */
-    public function __construct(int $attempts = 1)
-    {
-        $this->attempts = $attempts;
-    }
-
-    /**
-     * @param $data
+     * @param $passable
      * @param  \Closure  $next
+     * @param  int  $attempts
      *
      * @return mixed
-     * @throws \Throwable
      */
-    public function handle($data, \Closure $next)
+    public function handle($passable, \Closure $next, int $attempts)
     {
-        return DB::transaction(fn () => $next($data), $this->attempts);
+        return DB::transaction(fn () => $next($passable), $attempts);
     }
 }

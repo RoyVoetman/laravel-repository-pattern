@@ -106,7 +106,7 @@ abstract class Repository
      *
      * @return $this
      */
-    public function withPipeGroup($group): self
+    public function withGroup($group): self
     {
         if (is_string($group)) {
             $group = Arr::wrap($group);
@@ -128,7 +128,7 @@ abstract class Repository
      *
      * @return $this
      */
-    public function withPipe($pipe): self
+    public function with($pipe): self
     {
         $this->pipeStack[] = $pipe;
         

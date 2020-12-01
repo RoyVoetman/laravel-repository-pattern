@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Model;
+
+class DummyPipe
+{
+    /**
+     * @param  Model  $model
+     * @param  \Closure  $next
+     *
+     * @return mixed
+     */
+    public function handle(Model $model, \Closure $next)
+    {
+        return $next($data);
+    }
+}

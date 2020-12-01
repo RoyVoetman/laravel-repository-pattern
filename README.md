@@ -123,7 +123,11 @@ class HashPassword
 }
 ```
 
-> Pipes that are applied to a **delete** action receive an Eloquent Model as the first parameter instead of a `$data` array with model-data.
+However pipes that are applied to a **delete** action receive an Eloquent Model as the first parameter instead of a `$data` array with model-data.
+To create a delete pipe, add the `--delete` option to the generator command.
+```bash
+php artisan make:pipe RemoveRelations --delete
+```
 
 #### Before & After Pipes
 Whether a pipe runs before or after the insertion/update/deletion of the model depends on the pipe itself.
@@ -184,6 +188,14 @@ class BooksRepository extends Repository
 }
 ```
 
+Alternatively pipes can be defined at runtime by using the `with` method.
+
+```php
+(new BooksRepository())->with(Translate::class)->create([
+    ...
+]);
+```
+
 ### Pipe Groups
 Sometimes you may want to group several pipes under a single key to make them easier to apply. You may do this using the `$pipeGroups` field in your repository. For example, you may want to apply special logic when saving a VIP user as opposed to a regular user:
 
@@ -201,13 +213,54 @@ class UsersRepository extends Repository
 }
 ```
 
-You may then apply the group by calling the `withPipeGroup` method.
+You may then apply the group by calling the `withGroup` method.
 ```php
-$user = (new UsersRepository())->withPipeGroup('vip')->save([
+$user = (new UsersRepository())->withGroup('vip')->save([
   'name' => 'Roy Voetman',
-  'email' => 'info@example.com'
+  'email' => 'info@example.com',
   ...
 ]);
+```
+
+### Pipe Parameters
+Pipes can also receive additional parameters. 
+For example, if want to apply a transaction with a specific number of retries, you could define the Transaction middleware that receives an integer indicating the retries as an additional argument.
+
+```php
+class Transaction
+{
+    public function handle($data, \Closure $next, int $attempts)
+    {
+        return DB::transaction(fn () => $next($data), $attempts);
+    }
+}
+```
+
+Pipe parameters may be specified when defining the `$pipes` array by separating the class name and parameters with a :. 
+Multiple parameters should be delimited by commas:
+
+```php
+class BooksRepository extends Repository
+{
+    protected array $pipes = [
+        'save' => [
+            '\RoyVoetman\Repositories\Pipes\Transaction::class:3'
+        ],
+    ];
+    
+    ...
+}
+```
+
+However, pipe parameters can also be defined at runtime by using the `with` method on the repository.
+
+```php
+(new BooksRepository())
+    ->with('\RoyVoetman\Repositories\Pipes\Transaction::class:3')
+    ->create([
+        ...
+    ]
+);
 ```
 
 ## Transactions

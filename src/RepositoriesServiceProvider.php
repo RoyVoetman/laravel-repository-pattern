@@ -3,6 +3,7 @@
 namespace RoyVoetman\Repositories;
 
 use Illuminate\Support\ServiceProvider;
+use RoyVoetman\Repositories\Commands\PipeMakeCommand;
 use RoyVoetman\Repositories\Commands\RepositoryMakeCommand;
 
 /**
@@ -16,7 +17,8 @@ class RepositoriesServiceProvider extends ServiceProvider
      * @var array
      */
     protected array $commands = [
-        RepositoryMakeCommand::class
+        RepositoryMakeCommand::class,
+        PipeMakeCommand::class,
     ];
     
     /**
