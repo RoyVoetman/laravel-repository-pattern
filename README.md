@@ -235,10 +235,22 @@ $user = (new UsersRepository())->withGroup('vip')->save([
 ]);
 ```
 
-### Pipe Parameters
-Pipes can also receive additional parameters. 
-For example, if want to apply a transaction with a specific number of retries, you could define a transaction pipe that receives an integer indicating the retries as an additional argument.
+## Transactions
+This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
+For example, the `UsesTransaction` interface could be implemented by the repository to indicate that every pipeline should run in a transaction.
 
+```php
+class BooksRepository extends Repository implements UsesTransaction
+{
+    protected string $model = Book::class;
+}
+```
+
+## Pipe Parameters
+Pipes can also receive additional parameters. 
+For example, if want to apply the transaction pipe with a specific number of retries, you could pass an integer indicating the retries as an additional argument.
+
+To clarify, the transaction pipe is defined as follows:
 ```php
 class Transaction
 {
@@ -274,19 +286,6 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
         ...
     ]
 );
-```
-
-> The described transaction pipe is already included in this packages as `RoyVoetman\Repositories\Pipes\Transaction` and can be used for create, update and delete actions.
-
-## Transactions
-This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
-For example, the `UsesTransaction` interface could be implemented by the repository to indicate that every pipeline should run in a transaction.
-
-```php
-class BooksRepository extends Repository implements UsesTransaction
-{
-    protected string $model = Book::class;
-}
 ```
 
 By implementing `UsesTransaction` the case in which inserting a record or saving the translations raises an exception will not cause data inconsistencies.
