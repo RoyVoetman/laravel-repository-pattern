@@ -126,18 +126,18 @@ class HashPassword
 However pipes that are applied to a **delete** action receive an Eloquent Model as the first parameter instead of a `$data` array with model-data.
 To create a delete pipe, add the `--delete` option to the generator command.
 ```bash
-php artisan make:pipe RemoveRelations --delete
+php artisan make:pipe RemoveBookRelations --delete
 ```
 
 ```php
-class RemoveRelations
+class RemoveBookRelations
 {
-    public function handle(Model $model, Closure $next)
+    public function handle(Model $book, Closure $next)
     {
-        $model->author()->delete();
-        $model->reviews()->delete();
+        $book->author()->delete();
+        $book->reviews()->delete();
 
-        return $next($model);
+        return $next($book);
     }
 }
 ```
