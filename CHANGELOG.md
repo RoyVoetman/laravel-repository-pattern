@@ -15,4 +15,4 @@ All notable changes to `Laravel Repository Pattern` will be documented in this f
 - Rewrote core logic to use Laravel's native pipeline API.
 
 ### 2.0.1 - 2020-12-01
-- Changed naming of with method and updated docs.
+- Changed naming of "with" methods and updated docs.
