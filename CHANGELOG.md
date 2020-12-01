@@ -16,3 +16,6 @@ All notable changes to `Laravel Repository Pattern` will be documented in this f
 
 ### 2.0.1 - 2020-12-01
 - Changed naming of "with" methods and updated docs.
+
+### 2.0.2 - 2020-12-01
+- Changed namespace of Repository class to math PSR standard.
