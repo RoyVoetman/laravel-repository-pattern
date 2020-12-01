@@ -144,7 +144,7 @@ class RemoveBookRelations
 
 #### Before & After Pipes
 Whether a pipe runs before or after the insertion/update/deletion of the model depends on the pipe itself.
-For example, the following middleware would perform some task before any data manipulations are made persistent:
+For example, the following pipe would perform some task before any data manipulations are made persistent:
 
 ```php
 class BeforePipe
@@ -237,7 +237,7 @@ $user = (new UsersRepository())->withGroup('vip')->save([
 
 ### Pipe Parameters
 Pipes can also receive additional parameters. 
-For example, if want to apply a transaction with a specific number of retries, you could define Transaction middleware that receives an integer indicating the retries as an additional argument.
+For example, if want to apply a transaction with a specific number of retries, you could define a transaction pipe that receives an integer indicating the retries as an additional argument.
 
 ```php
 class Transaction
@@ -275,6 +275,8 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
     ]
 );
 ```
+
+> The described transaction pipe is already included in this packages as `RoyVoetman\Repositories\Pipes\Transaction`
 
 ## Transactions
 This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
