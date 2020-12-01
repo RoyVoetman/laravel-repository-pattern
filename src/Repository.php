@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories;
+namespace RoyVoetman\Repositories;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;

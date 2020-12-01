@@ -3,9 +3,9 @@
 namespace RoyVoetman\Repositories\Interfaces;
 
 /**
- * Interface UseTransaction
+ * Interface UsesTransaction
  *
- * @package App\Repositories
+ * @package RoyVoetman\Repositories\Interfaces
  */
 interface UsesTransaction
 {
