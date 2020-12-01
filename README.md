@@ -129,6 +129,19 @@ To create a delete pipe, add the `--delete` option to the generator command.
 php artisan make:pipe RemoveRelations --delete
 ```
 
+```php
+class RemoveRelations
+{
+    public function handle(Model $model, Closure $next)
+    {
+        $model->author()->delete();
+        $model->reviews()->delete();
+
+        return $next($model);
+    }
+}
+```
+
 #### Before & After Pipes
 Whether a pipe runs before or after the insertion/update/deletion of the model depends on the pipe itself.
 For example, the following middleware would perform some task before any data manipulations are made persistent:
