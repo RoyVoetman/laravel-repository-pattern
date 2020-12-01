@@ -299,7 +299,7 @@ class BooksRepository extends Repository
 {
     protected array $pipes = [
         'save' => [
-            '\RoyVoetman\Repositories\Pipes\Transaction::class:3'
+            '\RoyVoetman\Repositories\Pipes\Transaction:3'
         ],
     ];
     
@@ -311,7 +311,7 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
 
 ```php
 (new BooksRepository())
-    ->with('\RoyVoetman\Repositories\Pipes\Transaction::class:3')
+    ->with('\RoyVoetman\Repositories\Pipes\Transaction:3')
     ->create([
         ...
     ]
