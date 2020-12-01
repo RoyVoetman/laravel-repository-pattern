@@ -11,7 +11,7 @@ Middleware for Eloquent Models
   * [Repositories](#repositories)
     * [Defining repositories](#defining-repositories)
     * [Inserting & Updating Models](#inserting--updating-models)
-    * [Deleting models](#deleting-models)
+    * [Deleting Models](#deleting-models)
   * [Pipes](#pipes)
     * [Defining Pipes](#defining-pipes)
       * [Before & After Pipes](#before--after-pipes)
@@ -101,7 +101,7 @@ $updatedBook = (new BooksRepository())->save([
 ], $book);
 ```
 
-### Deleting models
+### Deleting Models
 
 `delete(Model $model): bool`
 
