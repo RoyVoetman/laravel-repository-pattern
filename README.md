@@ -237,7 +237,7 @@ $user = (new UsersRepository())->withGroup('vip')->save([
 
 ### Pipe Parameters
 Pipes can also receive additional parameters. 
-For example, if want to apply a transaction with a specific number of retries, you could define the Transaction middleware that receives an integer indicating the retries as an additional argument.
+For example, if want to apply a transaction with a specific number of retries, you could define Transaction middleware that receives an integer indicating the retries as an additional argument.
 
 ```php
 class Transaction
