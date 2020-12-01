@@ -242,9 +242,9 @@ For example, if want to apply a transaction with a specific number of retries, y
 ```php
 class Transaction
 {
-    public function handle($data, \Closure $next, int $attempts)
+    public function handle($passable, \Closure $next, int $attempts)
     {
-        return DB::transaction(fn () => $next($data), $attempts);
+        return DB::transaction(fn () => $next($passable), $attempts);
     }
 }
 ```
@@ -276,7 +276,7 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
 );
 ```
 
-> The described transaction pipe is already included in this packages as `RoyVoetman\Repositories\Pipes\Transaction`
+> The described transaction pipe is already included in this packages as `RoyVoetman\Repositories\Pipes\Transaction` and can be used for create, update and delete actions.
 
 ## Transactions
 This package provides a transaction pipe which can be used to run a certain pipeline in a database transaction.
