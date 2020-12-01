@@ -14,7 +14,7 @@ Middleware for Eloquent Models
     * [Deleting Models](#deleting-models)
   * [Pipes](#pipes)
     * [Defining Pipes](#defining-pipes)
-      * [Before & After Pipes](#before--after-pipes)
+    * [Before & After Pipes](#before--after-pipes)
     * [Using Pipes](#using-pipes)
     * [Pipe Groups](#pipe-groups)
   * [Transactions](#transactions)
@@ -158,7 +158,7 @@ class RemoveBookRelations
 }
 ```
 
-#### Before & After Pipes
+### Before & After Pipes
 Whether a pipe runs before or after the insertion/update/deletion of the model depends on the pipe itself.
 For example, the following pipe would perform some task before any data manipulations are made persistent:
 
@@ -299,7 +299,7 @@ class BooksRepository extends Repository
 {
     protected array $pipes = [
         'save' => [
-            '\RoyVoetman\Repositories\Pipes\Transaction::class:3'
+            '\RoyVoetman\Repositories\Pipes\Transaction:3'
         ],
     ];
     
@@ -311,7 +311,7 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
 
 ```php
 (new BooksRepository())
-    ->with('\RoyVoetman\Repositories\Pipes\Transaction::class:3')
+    ->with('\RoyVoetman\Repositories\Pipes\Transaction:3')
     ->create([
         ...
     ]
