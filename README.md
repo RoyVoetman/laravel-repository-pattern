@@ -5,6 +5,22 @@ Middleware for Eloquent Models
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Total Downloads](https://img.shields.io/packagist/dt/royvoetman/laravel-repository-pattern.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-repository-pattern)
 
+## Table of Contents
+  * [Introduction](#introduction)
+  * [Installation](#installation)
+  * [Repositories](#repositories)
+    * [Defining repositories](#defining-repositories)
+    * [Inserting & Updating Models](#inserting--updating-models)
+    * [Deleting models](#deleting-models)
+  * [Pipes](#pipes)
+    * [Defining Pipes](#defining-pipes)
+      * [Before & After Pipes](#before--after-pipes)
+    * [Using Pipes](#using-pipes)
+    * [Pipe Groups](#pipe-groups)
+  * [Transactions](#transactions)
+  * [Pipe Parameters](#pipe-parameters)
+  * [Changelog](#changelog)
+
 ## Introduction 
 This package provides a convenient mechanism for grouping data manipulation logic, which is equivalent to Laravel's native HTTP middleware.
 However, to prevent any confusion with HTTP middleware hereafter this mechanism will be referred to in its more general form called a `pipeline`.
@@ -246,6 +262,20 @@ class BooksRepository extends Repository implements UsesTransaction
 }
 ```
 
+By implementing `UsesTransaction` the case in which inserting a record or saving the translations raises an exception will not cause data inconsistencies.
+In fact, when an exception is raised the transaction will be rolled back.  
+
+Furthermore, the `transaction()` method could be used to specify that only the current pipeline should be run inside a transaction.
+
+```php
+$book = $books->transaction()->save([
+  'name' => 'Laravel',
+  'author' => 'Taylor Otwell'
+]);
+```
+
+> Caution: the `Transaction` pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the pipe stack.
+
 ## Pipe Parameters
 Pipes can also receive additional parameters. 
 For example, if want to apply the transaction pipe with a specific number of retries, you could pass an integer indicating the retries as an additional argument.
@@ -287,20 +317,6 @@ However, pipe parameters can also be defined at runtime by using the `with` meth
     ]
 );
 ```
-
-By implementing `UsesTransaction` the case in which inserting a record or saving the translations raises an exception will not cause data inconsistencies.
-In fact, when an exception is raised the transaction will be rolled back.  
-
-Furthermore, the `transaction()` method could be used to specify that only the current pipeline should be run inside a transaction.
-
-```php
-$book = $books->transaction()->save([
-  'name' => 'Laravel',
-  'author' => 'Taylor Otwell'
-]);
-```
-
-> Caution: the `Transaction` pipe can also be used by adding it to the `$pipes` field. However, since the pipes are run consecutively it should be the first pipe in the array. The techniques discussed above automatically prepend the pipe to the beginning of the pipe stack.
 
 ## Changelog
 
