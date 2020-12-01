@@ -1,6 +1,6 @@
 {
     "name": "royvoetman/laravel-repository-pattern",
-    "description": "An elegant interface to create, update and delete models with relations dependence.",
+    "description": "Middleware for Eloquent Models",
     "type": "library",
     "license": "MIT",
     "require": {
