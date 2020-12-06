@@ -19,3 +19,6 @@ All notable changes to `Laravel Repository Pattern` will be documented in this f
 
 ### 2.0.2 - 2020-12-01
 - Changed namespace of Repository class to math PSR standard.
+
+### 2.0.3 - 2020-12-06
+- Added php 8 support
