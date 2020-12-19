@@ -1,4 +1,4 @@
-<img src="https://www.royvoetman.nl/images/packages/repo-patte.svg" width="100%">
+<img src="https://www.royvoetman.nl/images/packages/repo-pattern.svg" width="100%">
 
 Middleware for Eloquent Models
 
