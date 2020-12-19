@@ -1,4 +1,5 @@
-# Laravel Repository Pattern
+<img src="https://www.royvoetman.nl/images/packages/repo-pattern.svg" width="100%">
+
 Middleware for Eloquent Models
 
 [![Latest Version](https://img.shields.io/packagist/v/royvoetman/laravel-repository-pattern.svg?style=flat-square)](https://packagist.org/packages/royvoetman/laravel-repository-pattern)
