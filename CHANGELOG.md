@@ -22,3 +22,6 @@ All notable changes to `Laravel Repository Pattern` will be documented in this f
 
 ### 2.0.3 - 2020-12-06
 - Added php 8 support
+
+### 2.0.4 - 2023-06-17
+- Added laravel 9 and 10 support
