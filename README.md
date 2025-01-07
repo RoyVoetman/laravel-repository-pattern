@@ -1,4 +1,4 @@
-<img src="https://www.royvoetman.nl/images/packages/repository-pattern.svg" width="100%">
+<img src="https://www.cs-library.com/images/packages/repository-pattern.svg" width="100%">
 
 Middleware for Eloquent Models
 
